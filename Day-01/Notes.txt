@@ -1,0 +1,15 @@
+JavaScript Runtime
+    
+ROR - 30 servers
+Node.js - 3 servers (90%) 20 times more performance
+
+structure of the application more complex
+
+Single Threaded
+
+Async Event Loop
+
+Single Threaded - Blocking
+Multi threaded - Blocking
+
+Single Threaded - Non Blocking
