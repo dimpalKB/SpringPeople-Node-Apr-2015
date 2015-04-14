@@ -1,0 +1,11 @@
+{
+  "name": "calculator-app",
+  "version": "0.1.0",
+  "description": "A simple application to demonstrate node application creation",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Magesh K",
+  "license": "ISC"
+}

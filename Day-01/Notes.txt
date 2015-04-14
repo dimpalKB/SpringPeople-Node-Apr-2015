@@ -13,3 +13,8 @@ Single Threaded - Blocking
 Multi threaded - Blocking
 
 Single Threaded - Non Blocking
+
+node.exe
+npm
+
+package.json
