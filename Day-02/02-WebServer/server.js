@@ -1,10 +1,13 @@
 var http = require("http"),
     fs = require("fs"),
     path = require("path"),
-    url = require('url');
+    url = require('url'),
+    calculator = require('./calculator');
 
 
 /*
+
+http://localhost:9090/calculator?op=add&n1=100&n2=200
 1. check if the request is for a static resource
 2. if yes, serve the resource (handle non existence scenario)
 3. else, if the request is for "/calculator"
@@ -18,39 +21,29 @@ function isStatic(resource){
 }
 
 var server = http.createServer(function(req, res){
-    var requestedUrl = url.parse(req.url)
+    var requestedUrl = url.parse(req.url, true);
     if (isStatic(requestedUrl.pathname)){
         var resource = path.join(__dirname , requestedUrl.pathname);
-        console.log(resource);
         if (fs.existsSync(resource)){
-            /*fs.readFile(resource, {encoding : "utf8"}, function(err, data){
-                if (err){
-                    res.statusCode = 404;
-                    res.end();
-                } else {
-                    res.write(data);
-                    res.end();
-                }
-            });*/
-            var stream = fs.createReadStream(resource, {encoding : "utf8"});
-           /* stream.on("data", function(data){
-                res.write(data);
-            });
-            stream.on("end", function(){
-                res.end();
-            });
-            stream.on("error", function(){
-                res.statusCode = 404;
-                res.end();
-            });*/
-            stream.pipe(res);
+            fs.createReadStream(resource, {encoding : "utf8"}).pipe(res);
         } else {
             res.statusCode = 404;
             res.end();
         }
     } else {
-        res.write("The requested resource is not a static resource");
-        res.end();
+        if (requestedUrl.pathname === "/calculator"){
+            var data = {
+                op : requestedUrl.query.op,
+                n1 : parseInt(requestedUrl.query.n1,10),
+                n2 : parseInt(requestedUrl.query.n2,10)
+            };
+            var result = calculator[data.op](data.n1, data.n2);
+            res.write(result.toString());
+            res.end();
+        } else {
+            res.statusCode = 404;
+            res.end();
+        }
     }
 });
 server.listen(9090);
