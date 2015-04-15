@@ -1,0 +1,21 @@
+function f1(next){
+  console.log("f1 is invoked");
+  if (next) next();
+}
+
+function f2(next){
+  console.log("f2 is invoked");
+  if (next) next();
+}
+
+function f3(next){
+  console.log("f3 is invoked");
+  if (next) next();
+}
+
+var fns = [f1, f2, f3]
+function run(fns){
+    //do something that results in all these functions to be invoked in sequence
+}
+
+run(fns);

@@ -1,6 +1,7 @@
 var calculator = require('./calculator');
 
 module.exports = function(req, res){
+    console.log('calculatorProcessor');
     if (req.url.pathname === "/calculator"){
         var data = {
             op : req.url.query.op,
