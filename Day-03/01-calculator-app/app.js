@@ -3,10 +3,16 @@ function add(middleware){
     middlewares.push(middleware);
 }
 function run(req, res){
-    for(var i=0; i<middlewares.length;i++){
-        var middleware= middlewares[i];
-        middleware(req, res);
+    function process(req, res, middlewares){
+        var middleware = middlewares[0];
+        var remaining = middlewares.slice(1);
+        var next = function(){
+            process(req, res, remaining);
+        }
+        if (middleware)
+            middleware(req, res, next);
     }
+    process(req, res, middlewares);
 }
 
 module.exports = {

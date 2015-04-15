@@ -15,7 +15,12 @@ function f3(next){
 
 var fns = [f1, f2, f3]
 function run(fns){
-    //do something that results in all these functions to be invoked in sequence
+    var first = fns[0];
+    if (first){
+        first(function(){
+            run(fns.slice(1));
+        });
+    }
 }
 
 run(fns);

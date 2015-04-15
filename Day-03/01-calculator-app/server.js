@@ -3,9 +3,12 @@ var http = require("http"),
     serveStatic = require('./serveStatic'),
     calculatorProcessor = require('./calculatorProcessor'),
     notFoundAction = require('./notFoundAction'),
+    bodyParser = require('./bodyParser.js'),
     app = require('./app');
 
 app.use(dataParser);
+app.use(bodyParser);
+serveStatic.addStaticResourceExtn(".json");
 app.use(serveStatic.process);
 app.use(calculatorProcessor);
 app.use(notFoundAction);
