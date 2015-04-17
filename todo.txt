@@ -7,5 +7,5 @@ http://localhost:9090
     
     
     post - /tasks/remove -> remove the task with the given id 
-    post - /tasks/toggle -> toggle the completed status of the given id
+   
     post - /tasks/removeCompleted -> remove all completed tasks and redirect the user to /tasks

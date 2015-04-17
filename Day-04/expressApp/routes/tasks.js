@@ -34,5 +34,16 @@ router.post('/new', function( req, res, next){
     res.redirect('/tasks');
 });
 
+// post - /tasks/toggle -> toggle the completed status of the given id
+router.post('/toggle', function(req, res, next){
+    var taskId = parseInt(req.body.id);
+    var task = taskList.filter(function(task){
+        return task.id === taskId;
+    })[0];
+    if (task){
+        task.isCompleted = !task.isCompleted;
+    };
+    res.json(task);
+});
 
 module.exports = router;

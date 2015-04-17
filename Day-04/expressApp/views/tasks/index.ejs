@@ -3,13 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Task Manager</title>
+    <style>
+    .completed {
+        color : red;
+        text-decoration : line-through;
+        font-style : italic;
+        font-weight : bold;
+    }
+        li{
+            cursor : pointer;
+        }
+    </style>
+    <script src="/javascripts/jquery-1.11.2.js"></script>
+    <script>
+    $(function(){
+        $("li").click(function(){
+            var $this = $(this),
+                taskId = $this.attr('data-task-id');
+            $.ajax({
+                url : '/tasks/toggle',
+                method : 'post',
+                data : JSON.stringify({ id : taskId }),
+                dataType : 'JSON',
+                contentType : 'application/json',
+                success : function(task){
+                    $this.toggleClass('completed');
+                }
+            });
+        });
+    });
+    </script>
+
 </head>
 <body>
     <h1>Task Manager</h1>
     <hr>
     <ol>
        <% for(var i=0; i<list.length; i++) { %>
-        <li><%= list[i].name %></li>
+         <% if (list[i].isCompleted) { %>
+            <li class='completed' data-task-id='<%= list[i].id %>'><%= list[i].name %></li>
+        <% } else { %>
+            <li data-task-id='<%= list[i].id %>'><%= list[i].name %></li>
+        <% } %>
     <% } %>
     </ol>
 </body>
