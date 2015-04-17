@@ -9,3 +9,13 @@ http://localhost:9090
     post - /tasks/remove -> remove the task with the given id 
    
     post - /tasks/removeCompleted -> remove all completed tasks and redirect the user to /tasks
+    
+session
+
+if the request has a cookie 'sessionId', locate the session object and attach it to 
+req.session
+else
+    create a new sessionId, and sessionObject
+    add them to the store
+    write a 'sessionId' cookie to the response
+    add the session to req.session
